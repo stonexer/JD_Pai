@@ -1,8 +1,7 @@
-function getRamdomNumber(){
-    var num="";
-    for(var i=0;i<6;i++)
-    {
-        num+=Math.floor(Math.random()*10);
+function getRamdomNumber() {
+    var num = "";
+    for (var i = 0; i < 6; i++) {
+        num += Math.floor(Math.random() * 10);
     }
     return num;
 }
@@ -32,7 +31,9 @@ function singlePai(uid) {
         if (price <= priceMax) {
             var buyIt = "http://paimai.jd.com/services/bid.action?t=" + getRamdomNumber() + "&paimaiId=" + uid + "&price=" + price + "&proxyFlag=0&bidSource=0";
             $.get(buyIt, function(data) {
-                handle_response(data);
+                if (data!==undefined) {
+                    handle_response(data);
+                }
             }, 'json');
         } else {
             show_msg("超过心愿价了，放弃吧孩子...");
@@ -41,30 +42,30 @@ function singlePai(uid) {
 }
 
 function handle_response(response) {
-    if (response.code == "200") {
+    if (response.result == "200") {
         show_msg("成功抢拍一次...");
     } else {
-        show_msg("失败了..." + response.code);
+        show_msg("失败了..." + response.result);
     }
 }
 
-function show_msg(msg){
-    $(".ftx").append("<p class='p_msg'>" +msg+ "</p>");
-    setTimeout(function () {
+function show_msg(msg) {
+    $(".ftx").append("<p class='p_msg'>" + msg + "</p>");
+    setTimeout(function() {
         $('.p_msg').remove();
     }, 1000);
 }
 
-var priceLimit = parseInt( parseInt(/\d+/.exec($("del").html()), 10) * 0.1 , 10);
-console.log( $("del").html() );
+var priceLimit = parseInt(parseInt(/\d+/.exec($("del").html()), 10) * 0.1, 10);
+console.log($("del").html());
 
 var code = "<div id='control_bar'>" +
-"两折价：<input type='text' id='discount_price' readonly />" +
-"心愿价：<input type='text' id='max_price' />" +
-"<input type='button' value='刷新价格' id='btn_refresh' class='qp_btn' />" +
-"<input type='button' value='单击抢拍' id='btn_single_pai' class='qp_btn'/>" +
-"<input type='button' value='疯狂自动抢拍' id='btn_crazy_pai' class='qp_btn'/>" +
-"</div>";
+    "两折价：<input type='text' id='discount_price' readonly />" +
+    "心愿价：<input type='text' id='max_price' />" +
+    "<input type='button' value='刷新价格' id='btn_refresh' class='qp_btn' />" +
+    "<input type='button' value='单击抢拍' id='btn_single_pai' class='qp_btn'/>" +
+    "<input type='button' value='疯狂自动抢拍' id='btn_crazy_pai' class='qp_btn'/>" +
+    "</div>";
 
 $('body').prepend(code);
 // $('.auction_btn').prepend(code);
@@ -84,4 +85,3 @@ $('#btn_single_pai').on('click', function() {
 $('#btn_crazy_pai').on('click', function() {
     singlePai(uid);
 });
-
