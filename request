@@ -1,0 +1,7 @@
+查询
+curl 'http://paimai.jd.com/json/current/englishquery?paimaiId=10406696&skuId=0&t=714255&start=0&end=9' -H 'Pragma: no-cache' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://paimai.jd.com/10406696' -H 'X-Requested-With: XMLHttpRequest' -H 'Cookie: *****' -H 'Connection: keep-alive' -H 'Cache-Control: no-cache' --compressed
+
+
+
+购买
+curl 'http://paimai.jd.com/services/bid.action?t=925451&paimaiId=10406775&price=4&proxyFlag=0&bidSource=0' -H 'Pragma: no-cache' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://paimai.jd.com/10406775' -H 'X-Requested-With: XMLHttpRequest' -H 'Cookie: *****’ -H 'Connection: keep-alive' -H 'Cache-Control: no-cache' --compressed
