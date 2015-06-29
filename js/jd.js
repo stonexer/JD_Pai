@@ -27,25 +27,33 @@ function singlePai(uid) {
     var priceMax = $('#max_price').val();
     var queryIt = "http://paimai.jd.com/json/current/englishquery?paimaiId=" + uid + "&skuId=0&t=" + getRamdomNumber() + "&start=0&end=9";
     $.get(queryIt, function(data) {
-        price = data.currentPrice * 1 + 1;
-        jQuery('#auction3dangqianjia').val(data.currentPrice);
-        if (price <= priceMax) {
-            var buyIt = "http://paimai.jd.com/services/bid.action?t=" + getRamdomNumber() + "&paimaiId=" + uid + "&price=" + price + "&proxyFlag=0&bidSource=0";
-            $.get(buyIt, function(data) {
-                if (data !== undefined) {
-                    handle_response(data);
-                }
-            }, 'json');
+        if (my_price < data.currentPrice) {
+            price = data.currentPrice * 1 + 1;
+            jQuery('#auction3dangqianjia').val(data.currentPrice);
+            if (price <= priceMax) {
+                var buyIt = "http://paimai.jd.com/services/bid.action?t=" + getRamdomNumber() + "&paimaiId=" + uid + "&price=" + price + "&proxyFlag=0&bidSource=0";
+                $.get(buyIt, function(data) {
+                    if (data !== undefined) {
+                        if (data.result == "200") {
+                            my_price = price;
+                        }
+                        handle_response(data);
+                    }
+                }, 'json');
+            } else {
+                show_msg("超过心愿价了，放弃吧孩子...");
+            }
         } else {
-            show_msg("超过心愿价了，放弃吧孩子...");
+            show_msg("该商品正在你的手中...");
         }
     });
 }
 
+
 function crazyPai(uid) {
     var obj = self.setInterval(function() {
         singlePai(uid);
-    }, 5000);
+    }, 1000);
     return obj;
 }
 
@@ -81,7 +89,7 @@ $('body').prepend(code);
 var addr = document.location.href;
 var uid = /[\d]{4,8}/.exec(addr)[0];
 var switcher;
-var my_win;
+var my_price = 0;
 
 $('#discount_price').val(priceLimit);
 $('#max_price').val(priceLimit);
