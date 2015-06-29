@@ -1,4 +1,4 @@
-#京东夺宝助手
+#[京东夺宝助手](http://sitixi.com/wordpress/?p=115)
 
 ##使用说明
 
@@ -9,3 +9,5 @@
 5. 点击 单击抢拍 按钮， 可以直接以可能的最低价（当前价格＋1）抢拍，若当前价超出限制则会自动放弃，在下方提醒您已经超过心愿价。
 
 ![image](https://github.com/stonexer/JD_Pai/blob/master/imgs/Screen%20Shot.png?raw=true)
+
+http://sitixi.com/wordpress/?p=115
