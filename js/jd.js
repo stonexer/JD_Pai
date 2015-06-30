@@ -69,14 +69,15 @@ function show_msg(msg) {
     $(".ftx").append("<p class='p_msg'>" + msg + "</p>");
     setTimeout(function() {
         $('.p_msg').remove();
-    }, 1000);
+    }, 500);
 }
 
-var priceLimit = parseInt(parseInt(/\d+/.exec($("del").html()), 10) * 0.1, 10);
+var priceLimit = parseInt(parseInt(/\d+/.exec($("del").html()), 10), 10);
 console.log($("del").html());
 
 var code = "<div id='control_bar'>" +
-    "两折价：<input type='text' id='discount_price' readonly />" +
+    "<select id='discount'><option value='2'>两折</option><option value='4'>四折</option><option value='6'>六折</option></select>" +
+    "价：<input type='text' id='discount_price' readonly />" +
     "心愿价：<input type='text' id='max_price' />" +
     "<input type='button' value='刷新价格' id='btn_refresh' class='qp_btn' />" +
     "<input type='button' value='单击抢拍' id='btn_single_pai' class='qp_btn'/>" +
@@ -91,14 +92,19 @@ var uid = /[\d]{4,8}/.exec(addr)[0];
 var switcher;
 var my_price = 0;
 
-$('#discount_price').val(priceLimit);
-$('#max_price').val(priceLimit);
+$('#discount_price').val(parseInt(priceLimit * 0.2, 10));
+$('#max_price').val(parseInt(priceLimit * 0.2, 10));
 
 $('#btn_refresh').on('click', function() {
     queryPrice(uid);
 });
 $('#btn_single_pai').on('click', function() {
     singlePai(uid);
+});
+$('#discount').on('change', function() {
+    var dis = $('#discount').val();
+    $('#discount_price').val(parseInt(priceLimit * dis / 10, 10));
+    $('#max_price').val(parseInt(priceLimit * dis / 10, 10));
 });
 $('#btn_crazy_pai').on('click', function() {
     if (this.value == '疯狂自动抢拍') {
