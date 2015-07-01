@@ -13,9 +13,12 @@ function queryPrice(uid) {
     var queryIt = "http://paimai.jd.com/json/current/englishquery?paimaiId=" + uid + "&skuId=0&t=" + time + "&start=0&end=9";
     $.get(queryIt, function(data) {
         price = data.currentPrice * 1 + 1;
+        remainTime = parseInt(data.remainTime/1000,10);
+        $("#auction3Timer").append("<b> "+remainTime+"秒 </b>");
         if (price <= priceMax) {
             $(".quantity-text:last").val(price);
         } else {
+            $(".quantity-text:last").val(price);
             show_msg("超过心愿价了，放弃吧孩子...");
         }
     });
