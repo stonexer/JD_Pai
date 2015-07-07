@@ -32,19 +32,26 @@ function singlePai(uid) {
     $.get(queryIt, function(data) {
         if (my_price < data.currentPrice) {
             price = data.currentPrice * 1 + 1;
+            remainTime = parseInt(data.remainTime,10);
             jQuery('#auction3dangqianjia').val(data.currentPrice);
-            if (price <= priceMax) {
-                var buyIt = "http://paimai.jd.com/services/bid.action?t=" + getRamdomNumber() + "&paimaiId=" + uid + "&price=" + price + "&proxyFlag=0&bidSource=0";
-                $.get(buyIt, function(data) {
-                    if (data !== undefined) {
-                        if (data.result == "200") {
-                            my_price = price;
+
+            if(remainTime > 3000 || remainTime < 1000)
+            {
+                if (price <= priceMax) {
+                    var buyIt = "http://paimai.jd.com/services/bid.action?t=" + getRamdomNumber() + "&paimaiId=" + uid + "&price=" + price + "&proxyFlag=0&bidSource=0";
+                    $.get(buyIt, function(data) {
+                        if (data !== undefined) {
+                            if (data.result == "200") {
+                                my_price = price;
+                            }
+                            handle_response(data);
                         }
-                        handle_response(data);
-                    }
-                }, 'json');
+                    }, 'json');
+                } else {
+                    show_msg("超过心愿价了，放弃吧孩子...");
+                }
             } else {
-                show_msg("超过心愿价了，放弃吧孩子...");
+                show_msg("最后时刻抢拍中...");
             }
         } else {
             show_msg("该商品正在你的手中...");
@@ -56,7 +63,7 @@ function singlePai(uid) {
 function crazyPai(uid) {
     var obj = self.setInterval(function() {
         singlePai(uid);
-    }, 1000);
+    }, 2000);
     return obj;
 }
 
