@@ -9,10 +9,12 @@ function getRamdomNumber() {
 function queryPrice(uid) {
     var price;
     var priceMax = $('#max_price').val();
+    var increase = parseInt($('#increase').val(),10);
+
     var time = new Date().getTime();
     var queryIt = "http://paimai.jd.com/json/current/englishquery?paimaiId=" + uid + "&skuId=0&t=" + time + "&start=0&end=9";
     $.get(queryIt, function(data) {
-        price = data.currentPrice * 1 + 1;
+        price = data.currentPrice * 1 + increase;
         remainTime = parseInt(data.remainTime/1000,10);
         $("#auction3Timer").append("<b> "+remainTime+"秒 </b>");
         if (price <= priceMax) {
@@ -28,10 +30,13 @@ function queryPrice(uid) {
 function singlePai(uid) {
     var price;
     var priceMax = $('#max_price').val();
+    var increase = parseInt($('#increase').val(),10);
+
     var queryIt = "http://paimai.jd.com/json/current/englishquery?paimaiId=" + uid + "&skuId=0&t=" + getRamdomNumber() + "&start=0&end=9";
     $.get(queryIt, function(data) {
         if (my_price < data.currentPrice) {
-            price = data.currentPrice * 1 + 1;
+
+            price = data.currentPrice * 1 + increase;
             remainTime = parseInt(data.remainTime,10);
             jQuery('#auction3dangqianjia').val(data.currentPrice);
 
@@ -89,6 +94,7 @@ var code = "<div id='control_bar'>" +
     "<select id='discount'><option value='2'>两折</option><option value='4'>四折</option><option value='6'>六折</option></select>" +
     "价：<input type='text' id='discount_price' readonly />" +
     "心愿价：<input type='text' id='max_price' />" +
+    "每次增加：<input type='text' id='increase' />" +
     "<input type='button' value='刷新价格' id='btn_refresh' class='qp_btn' />" +
     "<input type='button' value='单击抢拍' id='btn_single_pai' class='qp_btn'/>" +
     "<input type='button' value='疯狂自动抢拍' id='btn_crazy_pai' class='qp_btn'/>" +
@@ -104,6 +110,7 @@ var my_price = 0;
 
 $('#discount_price').val(parseInt(priceLimit * 0.2, 10));
 $('#max_price').val(parseInt(priceLimit * 0.2, 10));
+$('#increase').val(parseInt(1,10));
 
 $('#btn_refresh').on('click', function() {
     queryPrice(uid);

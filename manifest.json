@@ -2,7 +2,7 @@
 	"manifest_version" : 2,
 	"name" : "京东夺宝小助手",
 	"description" : "京东夺宝小助手",
-	"version" : "0.3",
+	"version" : "0.4",
 	"permissions" : [
 		"tabs",
 		"http://paimai.jd.com/*"
