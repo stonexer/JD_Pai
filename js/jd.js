@@ -34,13 +34,14 @@ function singlePai(uid) {
 
     var queryIt = "http://paimai.jd.com/json/current/englishquery?paimaiId=" + uid + "&skuId=0&t=" + getRamdomNumber() + "&start=0&end=9";
     $.get(queryIt, function(data) {
+
         if (my_price < data.currentPrice) {
 
-            price = data.currentPrice * 1 + increase;
             remainTime = parseInt(data.remainTime,10);
+            price = data.currentPrice * 1 + increase;
             jQuery('#auction3dangqianjia').val(data.currentPrice);
 
-            if(remainTime > 3000 || remainTime < 1000)
+            if(remainTime > 3000 || remainTime < 50)
             {
                 if (price <= priceMax) {
                     var buyIt = "http://paimai.jd.com/services/bid.action?t=" + getRamdomNumber() + "&paimaiId=" + uid + "&price=" + price + "&proxyFlag=0&bidSource=0";
@@ -68,7 +69,7 @@ function singlePai(uid) {
 function crazyPai(uid) {
     var obj = self.setInterval(function() {
         singlePai(uid);
-    }, 2000);
+    }, 10);
     return obj;
 }
 
@@ -81,14 +82,17 @@ function handle_response(response) {
 }
 
 function show_msg(msg) {
-    $(".ftx").append("<p class='p_msg'>" + msg + "</p>");
-    setTimeout(function() {
-        $('.p_msg').remove();
-    }, 500);
+    if($(".p_msg").length === 0)
+    {
+        $(".ftx").append("<p class='p_msg'>" + msg + "</p>");
+        setTimeout(function() {
+            $('.p_msg').remove();
+        }, 500);
+    }
 }
 
 var priceLimit = parseInt(parseInt(/\d+/.exec($("del").html()), 10), 10);
-console.log($("del").html());
+// console.log($("del").html());
 
 var code = "<div id='control_bar'>" +
     "<select id='discount'><option value='2'>两折</option><option value='4'>四折</option><option value='6'>六折</option></select>" +
